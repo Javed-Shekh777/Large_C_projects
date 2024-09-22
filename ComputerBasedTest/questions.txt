@@ -1,0 +1,102 @@
+What is the square root of 144?
+A. 12
+B. 14
+C. 13
+D. 15
+A
+What is the derivative of x^2?
+A. 2x
+B. x
+C. x^2
+D. 1
+A
+What is the formula for force?
+A. F=ma
+B. E=mc^2
+C. V=IR
+D. P=IV
+A
+Solve for x: 2x = 10
+A. x=3
+B. x = 5
+C. x = 6
+D. x = 7
+B
+Who formulated the laws of motion?
+A. Newton
+B. Einstein
+C. Gallilio
+D. Tesla
+A
+What is the function of the liver?
+A. Detoxification
+B. Pumping blood
+C. Breathing
+D. Digestion
+A
+What does RAM stand for?
+A. Read Access Memory
+B. Rapid Access Memory
+C. Random Access Memory
+D. Run Access Memory
+C
+What does CSS stand for?
+A. Computer Style Sheets
+B. Cascading Script Sheets
+C. Central Style Sheets
+D. Cascading Style Sheets
+D
+What is the normal pH of blood?
+A. 6.5
+B. 5.3
+C. 8.7
+D. 7.0
+D
+What is the time complexity of binary search?
+A. O(n)
+B. O(n^2)
+C. O(log n)
+D. O(1)
+C
+What is the charge of an electron?
+A. 1.6x10^-19 C
+B. -1.6x10^-19 C
+C. 1.6x10^-18 C
+D. -1.6x10^-18 C
+B
+What is H2O?
+A. Water
+B. Oxygen
+C. Carbon Dioxide
+D. Hydrogen
+A
+Who is known as the father of modern chemistry?
+A. Antoine Lavoisier
+B. Dmitri Mendeleev
+C. Marie Curie
+D. Louis Pasteur
+A
+What is the escape velocity from Earth?
+A. 11.2 km/s
+B. 9.8 km/s
+C. 5 km/s
+D. 15 km/s
+A
+What is 10 divided by 2?
+A. 2
+B. 5
+C. 8
+D. 4
+B
+Right way to create an object?
+A. obj = ClassName()
+B. obj = new ClassName();
+C. obj = ClassName
+D. obj = class
+B
+what is your name
+A. aaa
+B. bbb
+C. cccc
+D. dddd
+D

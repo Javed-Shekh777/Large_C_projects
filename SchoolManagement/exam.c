@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <conio.h>
 #include "./school.h"
 #define MAX_QUESTIONS 20
 
-
-FILE *fptr = NULL;
 char buffer[256] = "";
 
 struct UserInfo
@@ -24,7 +23,17 @@ struct QuestionInfo
 };
 
 struct QuestionInfo questions[MAX_QUESTIONS];
- 
+
+void mainMenuDisplay();
+void Register();
+int Login();
+void CreateQuestions();
+int getQuestions();
+void userTest(int noOfQuestions);
+void reviewQuestions(int wrongAnswers[], char wrongOptions[], int noOfQuestions, int score);
+void generate_marksheet(int totalScore);
+
+
 
 void menu()
 {
@@ -137,6 +146,7 @@ void Register()
 
     } while (len <= 4);
 
+    FILE *fptr;
     fptr = fopen("users.txt", "a");
 
     if (fptr == NULL)
@@ -182,6 +192,7 @@ int Login()
 
     password[strcspn(password, "\n")] = '\0';
 
+    FILE *fptr;
     fptr = fopen("users.txt", "r");
     if (fptr == NULL)
     {
@@ -285,6 +296,8 @@ void CreateQuestions()
     }
 
     i = 0;
+
+    FILE *fptr;
     fptr = fopen("questions.txt", "a");
 
     if (fptr == NULL)
@@ -320,6 +333,8 @@ int getQuestions()
     system("cls"); // To clean the screen
 
     int counter = 0;
+
+    FILE *fptr;
 
     fptr = fopen("questions.txt", "r");
 
@@ -418,7 +433,7 @@ void userTest(int noOfQuestions)
 
     if (yesNo == 'y' || yesNo == 'Y')
     {
-        reviewQuestions(wrongAns, wrongOptions, noOfQuestions,score); // Review Questions function calling
+        reviewQuestions(wrongAns, wrongOptions, noOfQuestions, score); // Review Questions function calling
     }
     else
     {
@@ -428,7 +443,7 @@ void userTest(int noOfQuestions)
     return;
 }
 
-void reviewQuestions(int wrongAnswers[], char wrongOptions[], int noOfQuestions,int score)
+void reviewQuestions(int wrongAnswers[], char wrongOptions[], int noOfQuestions, int score)
 {
     system("cls");
     printf("\n________________________________ Review Your Answers ______________________________________\n\n");
@@ -436,20 +451,20 @@ void reviewQuestions(int wrongAnswers[], char wrongOptions[], int noOfQuestions,
 
     for (int i = 0; i < noOfQuestions; i++)
     {
-        
-        printf("\nQ%d. %s\n", i+1,questions[i].question);
+
+        printf("\nQ%d. %s\n", i + 1, questions[i].question);
         for (int j = 0; j < 4; j++)
         {
-        printf("%s                                                                          \n", questions[i].options[j]);
+            printf("%s                                                                          \n", questions[i].options[j]);
         }
         printf("+____________________________________________________________________________________________+\n");
         if (wrongAnswers[i] == 1)
         {
-        printf("+ Wrong Answer is :%c                                                  Correct Option : %c     +\n", wrongOptions[i], questions[i].correctOption);
+            printf("+ Wrong Answer is :%c                                                  Correct Option : %c     +\n", wrongOptions[i], questions[i].correctOption);
         }
         else
         {
-        printf("+                                                                      Correct Option : %c    +\n", questions[i].correctOption);
+            printf("+                                                                      Correct Option : %c    +\n", questions[i].correctOption);
         }
         printf("+____________________________________________________________________________________________+\n\n");
     }
@@ -475,7 +490,7 @@ void reviewQuestions(int wrongAnswers[], char wrongOptions[], int noOfQuestions,
 // Generating result/ Marksheet for user
 void generate_marksheet(int totalScore)
 {
-	system("cls");
+    system("cls");
     int percentage, incans;
     char persign = '%';
     percentage = (totalScore * 100) / 20;

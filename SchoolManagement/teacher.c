@@ -4,9 +4,6 @@
 #include <conio.h>
 #include "./school.h"
 
-FILE *fptr = NULL;
-FILE *temp = NULL;
-
 void addTeacher()
 {
     system("cls");
@@ -58,6 +55,8 @@ void addTeacher()
         system("cls");
     }
 
+    FILE *fptr;
+
     fptr = fopen("teacher.txt", "a");
     if (fptr == NULL)
     {
@@ -89,6 +88,7 @@ void readTeacher(int id)
         return;
     }
     system("cls");
+    FILE *fptr;
 
     fptr = fopen("teacher.txt", "r");
     if (fptr == NULL)
@@ -141,6 +141,7 @@ void updateTeacher(int id)
     system("cls");
     int found = 0;
     struct Teacher teacher;
+    FILE *fptr, *temp;
 
     fptr = fopen("teacher.txt", "r");
     temp = fopen("temp.txt", "w");
@@ -224,6 +225,7 @@ void deleteTeacher(int id)
     {
         return;
     }
+    FILE *fptr, *temp;
 
     fptr = fopen("teacher.txt", "r");
     temp = fopen("temp.txt", "w");

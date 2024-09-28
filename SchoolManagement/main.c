@@ -5,10 +5,11 @@
 void main()
 {
      int choice, id;
+     char parameter[40];
      while (1)
      {
           printf("\n---------------------------------- SCHOOL MANAGEMENT SYSTEM -----------------------\n\n");
-          printf("_________________________________________________________________________________+\n");
+          printf("__________________________________________________________________________________\n");
           printf("|                                                                                 |\n");
           printf("| Student management                                                              |\n");
           printf("|\t1. Add Student.                                                           |\n");
@@ -20,15 +21,14 @@ void main()
           printf("|\t6. View Teacher Details.                                                  |\n");
           printf("|\t7. Edit Teacher.                                                          |\n");
           printf("|\t8. Delete Teacher.                                                        |\n");
-          printf("| Course management                                                               |\n");
-          printf("|\t9. For Exam.                                                            |\n");
-          printf("|\t10. Add Course.                                                            |\n");
-          printf("|\t11. Update Course.                                                        |\n");
-          printf("|\t12. Delete Course.                                                        |\n");
-          printf("|\t13. View Avalable Courses.                                                |\n");
-          printf("|\t14. Assign Course to Teacher.                                             |\n");
-          printf("|\t15. Assign Course to Student.                                             |\n");
-          printf("|\t16. Exit.                                                                 |\n");
+          printf("| Attendence management                                                           |\n");
+          printf("|\t9. Mark Attendence.                                                       |\n");
+          printf("|\t10. View Attendence.                                                      |\n");
+          printf("| Fees management                                                                 |\n");
+          printf("|\t11. Add Fees.                                                             |\n");
+          printf("|\t12. View Fees.                                                            |\n");
+          printf("|\t13. For Exam.                                                             |\n");
+          printf("|\t14. Exit.                                                                 |\n");
           printf("|_________________________________________________________________________________|\n\n");
 
           printf("Please enter your choice : ");
@@ -73,19 +73,29 @@ void main()
                deleteTeacher(id);
                break;
           case 9:
-               menu();
+               makeAttendence();
                break;
           case 10:
+               fflush(stdin);
+               printf("\nPlease enter (Any one options to search data)-----\nBy class name\nBy Student id\nBy Attendence status\n : ");
+               printf("\nPlease enter something from above options :");
+               fgets(parameter, sizeof(parameter), stdin);
+               viewAttendence(parameter);
                break;
           case 11:
+               makeFees();
                break;
           case 12:
+               fflush(stdin);
+               printf("\nPlease enter (Any one options to search data)-----\nBy class name\nBy Student id\nBy Fees status\n : ");
+               printf("\nPlease enter something from above options :");
+               fgets(parameter, sizeof(parameter), stdin);
+               viewFees(parameter);
                break;
           case 13:
+               menu();
                break;
           case 14:
-               break;
-          case 16:
                exit(1);
                break;
           default:

@@ -86,11 +86,15 @@ void main()
                makeFees();
                break;
           case 12:
-               fflush(stdin);
-               printf("\nPlease enter (Any one options to search data)-----\nBy class name\nBy Student id\nBy Fees status\n : ");
-               printf("\nPlease enter something from above options :");
-               fgets(parameter, sizeof(parameter), stdin);
-               viewFees(parameter);
+               //  printf("\n\nPlease enter Teacher ID  : ");
+               // scanf("%d", &id);
+               // // printf("\nPlease enter (Any one options to search data)-----\nBy class name\nBy Student id\nBy Fees status\n : ");
+               // // printf("\nPlease enter something from above options :");
+               // // fgets(parameter, sizeof(parameter), stdin);
+               // viewFees(id);
+               printf("\n\nPlease enter student ID  : ");
+               scanf("%d", &id);
+               viewFees(id);
                break;
           case 13:
                menu();

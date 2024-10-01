@@ -1,0 +1,3 @@
+Username             Email                          Password       
+------------------------------------------------------------
+javed                javed@gmail.com                12345          

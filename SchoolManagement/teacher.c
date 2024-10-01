@@ -8,7 +8,7 @@ void addTeacher()
 {
     system("cls");
     int size = 0, i;
-    printf("\nPlease how many teachers you want to delete? :  ");
+    printf("\nPlease how many teachers you want to Add? :  ");
     scanf("%d", &size);
 
     if (size == 0)
@@ -43,6 +43,12 @@ void addTeacher()
         scanf("%d", &teacher[i].experience);
 
         fflush(stdin);
+        printf("\nPlease enter teacher subject : ");
+        fgets(teacher[i].subject, sizeof(teacher[i].subject), stdin);
+        teacher[i].subject[strcspn(teacher[i].subject, "\n")] = '\0';
+        fflush(stdin);
+
+        fflush(stdin);
         printf("\nPlease enter teacher address : ");
         fgets(teacher[i].address, sizeof(teacher[i].address), stdin);
         teacher[i].address[strcspn(teacher[i].address, "\n")] = '\0';
@@ -67,13 +73,13 @@ void addTeacher()
     fseek(fptr, 0, SEEK_END);
     if (ftell(fptr) == 0)
     {
-        fprintf(fptr, "%-10s %-30s %-5s %-10s %-10s %-100s %s\n", "Id", "Teacher_Name", "Age", "Gender", "Experience", "Address", "Contact");
+        fprintf(fptr, "%-10s %-30s %-5s %-10s %-10s %-40s %-100s %s\n", "Id", "Teacher_Name", "Age", "Gender", "Experience", "Subject", "Address", "Contact");
         fprintf(fptr, "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
     }
 
     for (i = 0; i < size; i++)
     {
-        fprintf(fptr, "%-10d %-30s %-5d %-10s %-10d %-100s %s\n", teacher[i].teacher_id, teacher[i].name, teacher[i].age, teacher[i].gender, teacher[i].experience, teacher[i].address, teacher[i].contact_number);
+        fprintf(fptr, "%-10d %-30s %-5d %-10s %-10d %-40s %-100s %s\n", teacher[i].teacher_id, teacher[i].name, teacher[i].age, teacher[i].gender, teacher[i].experience, teacher[i].subject, teacher[i].address, teacher[i].contact_number);
     }
 
     fclose(fptr);
@@ -104,10 +110,12 @@ void readTeacher(int id)
     fgets(buffer, sizeof(buffer), fptr);
     fgets(buffer, sizeof(buffer), fptr);
 
-    while (fscanf(fptr, "%d %30[^\n] %d %10[^\n] %d %90[^\n] %s", &teacher.teacher_id, teacher.name, &teacher.age, teacher.gender, teacher.experience, teacher.address, teacher.contact_number) != EOF)
+    while (fscanf(fptr, "%d %30[^\n] %d %10[^\n] %d %40[^\n] %90[^\n] %s", &teacher.teacher_id, teacher.name, &teacher.age, teacher.gender, &teacher.experience, teacher.subject, teacher.address, teacher.contact_number) != EOF)
     {
+        printf(" teacer id : %d %d", id, teacher.teacher_id);
         if (teacher.teacher_id == id)
         {
+
             found = 1;
             system("cls");
 
@@ -117,6 +125,7 @@ void readTeacher(int id)
             printf("Techer Age is : %d\n", teacher.age);
             printf("Techer Gender is : %s\n", teacher.gender);
             printf("Techer Experiece is : %d\n", teacher.experience);
+            printf("Techer Subject is : %s\n", teacher.subject);
             printf("Techer Address is : %s\n", teacher.address);
             printf("Techer Contact number is : %s\n", teacher.contact_number);
             break;
@@ -141,7 +150,8 @@ void updateTeacher(int id)
     system("cls");
     int found = 0;
     struct Teacher teacher;
-    FILE *fptr, *temp;
+    FILE *fptr;
+    FILE *temp;
 
     fptr = fopen("teacher.txt", "r");
     temp = fopen("temp.txt", "w");
@@ -155,16 +165,21 @@ void updateTeacher(int id)
     char buffer[256];
     fgets(buffer, sizeof(buffer), fptr); // Skip the header
     fgets(buffer, sizeof(buffer), fptr);
-
-    fprintf(temp, "%-10s %-30s %-5s %-10s %-10s %-100s %s\n", "Id", "Teacher_Name", "Age", "Gender", "Experience", "Address", "Contact");
-    fprintf(temp, "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-
-    while (fscanf(fptr, "%d %30[^\n] %d %10[^\n] %d %90[^\n] %s", &teacher.teacher_id, teacher.name, &teacher.age, teacher.gender, teacher.experience, teacher.address, teacher.contact_number) != EOF)
+   fseek(temp, 0, SEEK_END);
+    if (ftell(temp) == 0)
     {
-        if (teacher.teacher_id = id)
+        fprintf(temp, "%-10s %-30s %-5s %-10s %-10s %-40s %-100s %s\n", "Id", "Teacher_Name", "Age", "Gender", "Experience", "Subject", "Address", "Contact");
+        fprintf(temp, "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    }
+    while (fscanf(fptr, "%d %30[^\n] %d %10[^\n] %d %40[^\n] %90[^\n] %s", &teacher.teacher_id, teacher.name, &teacher.age, teacher.gender, &teacher.experience, teacher.subject, teacher.address, teacher.contact_number) != EOF)
+    {
+
+        printf("Teacher id  : %d %d", id, teacher.teacher_id);
+        if (teacher.teacher_id == id)
         {
             found = 1;
 
+            printf("\n\n Make change in following details....\n");
             fflush(stdin);
             printf("\nPlease enter teacher id : ");
             scanf("%d", &teacher.teacher_id);
@@ -187,6 +202,12 @@ void updateTeacher(int id)
             scanf("%d", &teacher.experience);
 
             fflush(stdin);
+            printf("\nPlease enter teacher subject : ");
+            fgets(teacher.subject, sizeof(teacher.subject), stdin);
+            teacher.subject[strcspn(teacher.subject, "\n")] = '\0';
+            fflush(stdin);
+
+            fflush(stdin);
             printf("\nPlease enter teacher address : ");
             fgets(teacher.address, sizeof(teacher.address), stdin);
             teacher.address[strcspn(teacher.address, "\n")] = '\0';
@@ -197,8 +218,7 @@ void updateTeacher(int id)
             teacher.contact_number[strcspn(teacher.contact_number, "\n")] = '\0';
             fflush(stdin);
         }
-
-        fprintf(temp, "%-10d %-30s %-5d %-10s %-10d %-100s %s\n", teacher.teacher_id, teacher.name, teacher.age, teacher.gender, teacher.experience, teacher.address, teacher.contact_number);
+        fprintf(temp, "%-10d %-30s %-5d %-10s %-10d %-40s %-100s %s\n", teacher.teacher_id, teacher.name, teacher.age, teacher.gender, teacher.experience, teacher.subject, teacher.address, teacher.contact_number);
     }
 
     fclose(fptr);
@@ -214,7 +234,7 @@ void updateTeacher(int id)
     else
     {
         printf("\nTeacher not found.");
-        remove("student.txt");
+        remove("teacher.txt");
         rename("temp.txt", "teacher.txt");
     }
 }
@@ -238,15 +258,15 @@ void deleteTeacher(int id)
         return;
     }
 
-    char buffer[400];
+    char buffer[500];
     fgets(buffer, sizeof(buffer), fptr);
     fgets(buffer, sizeof(buffer), fptr);
 
-    while (fscanf(fptr, "%d %30[^\n] %d %10[^\n] %d %100[^\n] %s", &teacher.teacher_id, teacher.name, &teacher.age, teacher.gender, &teacher.experience, teacher.address, teacher.contact_number) != EOF)
+    while (fscanf(fptr, "%d %30[^\n] %d %10[^\n] %d %40[^\n] %100[^\n] %s", &teacher.teacher_id, teacher.name, &teacher.age, teacher.gender, &teacher.experience, teacher.subject, teacher.address, teacher.contact_number) != EOF)
     {
         if (teacher.teacher_id != id)
         {
-            fprintf(temp, "%-10d %-30s %-5d %-10s %-10d %-100s %s\n", teacher.teacher_id, teacher.name, teacher.age, teacher.gender, teacher.experience, teacher.address, teacher.contact_number);
+            fprintf(temp, "%-10d %-30s %-5d %-10s %-10d %-40s %-100s %s\n", teacher.teacher_id, teacher.name, teacher.age, teacher.gender, teacher.experience, teacher.subject, teacher.address, teacher.contact_number);
         }
         else
         {
@@ -261,12 +281,12 @@ void deleteTeacher(int id)
     {
         remove("teacher.txt");
         rename("temp.txt", "teacher.txt");
-        printf("\nStudent record deleted successfully\n\n");
+        printf("\nTeacher record deleted successfully\n\n");
     }
     else
     {
         remove("teacher.txt");
         rename("temp.txt", "teacher.txt");
-        printf("\nStudent record not found. \n\n");
+        printf("\nTeacher record not found. \n\n");
     }
 }

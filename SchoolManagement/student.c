@@ -149,7 +149,7 @@ void updateStudent(int id)
         if (student.student_id == id)
         {
             found = 1;
-
+            printf("\n\nMake chages in given fields.....\n");
             fflush(stdin);
             printf("\nPlease enter Student id : ");
             scanf("%d", &student.student_id);

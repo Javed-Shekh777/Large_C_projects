@@ -33,8 +33,6 @@ void userTest(int noOfQuestions);
 void reviewQuestions(int wrongAnswers[], char wrongOptions[], int noOfQuestions, int score);
 void generate_marksheet(int totalScore);
 
-
-
 void menu()
 {
     int choice;
@@ -77,8 +75,7 @@ void menu()
             break;
         case 5:
             system("cls");
-            printf("Program is closing...");
-            exit(1);
+            return;
         default:
             system("cls");
             printf("Invalid choice entered..\n\n\t\t\t Press any key to continue...");
@@ -155,8 +152,8 @@ void Register()
         printf("\nSomething went wrong..\n\t\t while registering user...");
         exit(1);
     }
-
-    if (fseek(fptr, 0, SEEK_END) && ftell(fptr) == 0)
+    fseek(fptr, 0, SEEK_END);
+    if (ftell(fptr) == 0)
     {
         fprintf(fptr, "%-20s %-30s %-15s\n", "Username", "Email", "Password");
         fprintf(fptr, "------------------------------------------------------------\n");
@@ -220,6 +217,10 @@ int Login()
 
     for (int i = 0; i < counter; i++)
     {
+        printf("\n %s", users[i].username);
+        printf("\n %s", users[i].password);
+
+        printf("fdssd");
         if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0)
         {
             system("cls");
@@ -230,7 +231,7 @@ int Login()
     }
     if (!found)
     {
-        system("cls");
+        // system("cls");
         printf("\nInvalid username or password.");
         getch();
         return found;

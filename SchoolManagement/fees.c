@@ -20,8 +20,8 @@ void makeFees()
     class[strcspn(date, "\n")] = '\0';
 
     fflush(stdin);
-    printf("\nEnter Date total amount of fees: ");
-    scanf("%d",&total);
+    printf("\nEnter total amount of fees: ");
+    scanf("%d", &total);
 
     int i, size;
 
@@ -39,12 +39,14 @@ void makeFees()
     fseek(fptr, 0, SEEK_END);
     if (ftell(fptr) == 0)
     {
-        fprintf(fptr, "%-10s %-30s %-30s %-15s %-10d %-10d %-10s\n", "Student_ID", "Srudent_Name", "Class_Name", "Date", "Total_mount", "Paid_amount", "Status");
+        fprintf(fptr, "%-10s %-30s %-30s %-15s %-10s %-10s %s\n", "Student_ID", "Student_Name", "Class_Name", "Date", "Total_mount", "Paid_amount", "Status");
         fprintf(fptr, "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
     }
 
     for (i = 0; i < size; i++)
     {
+
+        printf("\n\nEnter %d student fees details...\n", i + 1);
         fflush(stdin);
         printf("\nPlease enter student id : ");
         scanf("%d", &fees[i].student_id);
@@ -55,17 +57,19 @@ void makeFees()
         fees[i].student_name[strcspn(fees[i].student_name, "\n")] = '\0';
 
         fflush(stdin);
-        printf("\nPlease enter student id : ");
+        printf("\nPlease enter paid amount : ");
         scanf("%d", &fees[i].paid_amount);
 
         strcpy(fees[i].class_name, class);
+        fees[i].class_name[strcspn(fees[i].class_name, "\n")] = '\0';
         strcpy(fees[i].date, date);
+        fees[i].date[strcspn(fees[i].date, "\n")] = '\0';
         fees[i].total_amount = total;
         if (fees[i].total_amount == fees[i].paid_amount)
         {
             strcpy(fees[i].status, "PAID");
         }
-        else
+        else if (fees[i].total_amount >= fees[i].paid_amount)
         {
             strcpy(fees[i].status, "PENDING");
         }
@@ -75,33 +79,27 @@ void makeFees()
 
     for (i = 0; i < size; i++)
     {
-        fprintf(fptr, "%-10d %-30s %-30s %-15s %-10d %-10d %-10s\n", fees[i].student_id, fees[i].student_name, fees[i].class_name, fees[i].date, fees[i].total_amount, fees[i].paid_amount, fees[i].status);
+        fprintf(fptr, "%-10d %-30s %-30s %-15s %-10d %-10d %s\n", fees[i].student_id, fees[i].student_name, fees[i].class_name, fees[i].date, fees[i].total_amount, fees[i].paid_amount, fees[i].status);
     }
     fclose(fptr);
 
     printf("\n\nStudent Fees has been filled successfully!!!");
 }
 
-void viewFees(char parameter[])
+void viewFees(int id)
 {
-    system("cls");
+    // system("cls");
 
-    if (strcmp(parameter, ""))
+    if (!id)
     {
         return;
     }
+
     FILE *fptr;
     fptr = fopen("fees.txt", "r");
     if (fptr == NULL)
     {
         printf("\nFile not oepned....");
-        return;
-    }
-
-    if (fseek(fptr, 0, SEEK_END) && ftell(fptr) == 0)
-    {
-        printf("\nI am sorry no data is available in attendence file\n");
-        getch();
         return;
     }
 
@@ -112,27 +110,32 @@ void viewFees(char parameter[])
     fgets(buffer, sizeof(buffer), fptr);
     fgets(buffer, sizeof(buffer), fptr);
 
-    printf("\n| %-10d %-30s %30s %15s %-10d %-10d %s |\n", "Student_ID", "Student_Name", "Class_Name", "Date", "Total_amount", "Paid_amount", "Status");
-    printf("|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n");
+    //  "%d %30[^\n] %d %10[^\n] %d %40[^\n] %90[^\n] %s"
 
-    while (fscanf(fptr, "%d %30[^\n] %30[^\n] %15[^\n] %d %d %s", &fees.student_id, fees.student_name, fees.class_name, fees.date, fees.total_amount, fees.paid_amount, fees.status) != EOF)
+    // %-10d %-30s %-30s %-15s %-10d %-10d %s
+
+    while (fscanf(fptr, "%d %30[^\n] %30[^\n] %10[^\n] %d %d %s", &fees.student_id, fees.student_name, fees.class_name, fees.date, &fees.total_amount, &fees.paid_amount, fees.status) != EOF)
     {
-
-        if (
-            strcmp(fees.class_name, parameter) == 0 || strcmp(fees.status, parameter) == 0)
+        if (fees.student_id == id)
         {
+            system("cls");
             found = 1;
-            printf("| %-10d |%-30s |%30s |%15s | %-10d |%-10d |%s |\n", fees.student_id, fees.student_name, fees.class_name, fees.date, fees.total_amount, fees.paid_amount, fees.status);
+            printf("\n\nStudent Fees Record found..\n\n");
+            printf("|----------------------------------------------------------------------------------------------------------------------------------------|\n");
+            printf("| %-10s | %-30s | %-30s | %-15s | %-10s | %-10s |  %s  |\n", "Student_ID", "Student_Name", "Class_Name", "Date", "Total_amount", "Paid_amount", "Status");
+            printf("|________________________________________________________________________________________________________________________________________|\n");
+            printf("| %-10d | %-30s | %-30s | %-15s |     %d     |    %d     | %-9s|\n", fees.student_id, fees.student_name, fees.class_name, fees.date, fees.total_amount, fees.paid_amount, fees.status);
+            printf("|----------------------------------------------------------------------------------------------------------------------------------------|\n");
+            break;
         }
-        printf("|________________________________________________________________________________________________________________________________________________________________________|\n");
     }
-
-    printf("|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n\n");
 
     if (!found)
     {
-        printf("\nStudent record not found of %s ", parameter);
+        printf("\nStudent record not found of %d ", id);
         getch();
     }
     getch();
 }
+
+// strcmp(fees.class_name, parameter) == 0 || strcmp(fees.status, parameter) == 0

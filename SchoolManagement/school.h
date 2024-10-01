@@ -20,6 +20,7 @@ struct Teacher
     int age;
     char gender[7];
     int experience;
+    char subject[60];
     char address[100];
     char contact_number[13];
 };
@@ -40,9 +41,9 @@ struct Fees
     int student_id; // Semicolon instead of comma
     char student_name[40];
     char class_name[40];
+     char date[15];
     int total_amount;
     int paid_amount;
-     char date[15];
     char status[10];
 };
 
@@ -71,10 +72,10 @@ void menu();
 
 // Attendence functions (attendence.c)
 void makeAttendence();
-void viewAttendence(char[]);
+void viewAttendence(char []);
 
 // Fees functions (attendence.c)
 void makeFees();
-void viewFees(char[]);
+void viewFees(int);
 
 #endif

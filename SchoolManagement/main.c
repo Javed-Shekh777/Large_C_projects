@@ -27,8 +27,9 @@ void main()
           printf("| Fees management                                                                 |\n");
           printf("|\t11. Add Fees.                                                             |\n");
           printf("|\t12. View Fees.                                                            |\n");
-          printf("|\t13. For Exam.                                                             |\n");
-          printf("|\t14. Exit.                                                                 |\n");
+          printf("|\t13. Edit Fees.                                                            |\n");
+          printf("|\t14. For Exam.                                                             |\n");
+          printf("|\t15. Exit.                                                                 |\n");
           printf("|_________________________________________________________________________________|\n\n");
 
           printf("Please enter your choice : ");
@@ -97,9 +98,20 @@ void main()
                viewFees(id);
                break;
           case 13:
-               menu();
+               //  printf("\n\nPlease enter Teacher ID  : ");
+               // scanf("%d", &id);
+               // // printf("\nPlease enter (Any one options to search data)-----\nBy class name\nBy Student id\nBy Fees status\n : ");
+               // // printf("\nPlease enter something from above options :");
+               // // fgets(parameter, sizeof(parameter), stdin);
+               // viewFees(id);
+               printf("\n\nPlease enter student ID  : ");
+               scanf("%d", &id);
+               editFees(id);
                break;
           case 14:
+               menu();
+               break;
+          case 15:
                exit(1);
                break;
           default:

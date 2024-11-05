@@ -110,10 +110,6 @@ void viewFees(int id)
     fgets(buffer, sizeof(buffer), fptr);
     fgets(buffer, sizeof(buffer), fptr);
 
-    //  "%d %30[^\n] %d %10[^\n] %d %40[^\n] %90[^\n] %s"
-
-    // %-10d %-30s %-30s %-15s %-10d %-10d %s
-
     while (fscanf(fptr, "%d %30[^\n] %30[^\n] %10[^\n] %d %d %s", &fees.student_id, fees.student_name, fees.class_name, fees.date, &fees.total_amount, &fees.paid_amount, fees.status) != EOF)
     {
         if (fees.student_id == id)
@@ -136,6 +132,89 @@ void viewFees(int id)
         getch();
     }
     getch();
+}
+
+void editFees(int id)
+{
+
+    if (!id)
+    {
+        return;
+    }
+
+    FILE *fptr;
+    FILE *temp;
+
+    fptr = fopen("fees.txt", "r");
+    temp = fopen("temp.txt", "w");
+    if (fptr == NULL || temp == NULL)
+    {
+        printf("File not oepned...");
+        return;
+    }
+
+    struct Fees fees;
+
+    fseek(temp, 0, SEEK_END);
+    if (ftell(temp) == 0)
+    {
+        fprintf(temp, "%-10s %-30s %-30s %-15s %-10s %-10s %s\n", "Student_ID", "Student_Name", "Class_Name", "Date", "Total_mount", "Paid_amount", "Status");
+        fprintf(temp, "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    }
+
+    char buffer[300];
+    int found = 0;
+    fgets(buffer, sizeof(buffer), fptr);
+    fgets(buffer, sizeof(buffer), fptr);
+
+    while (fscanf(fptr, "%d %30[^\n] %30[^\n] %10[^\n] %d %d %s", &fees.student_id, fees.student_name, fees.class_name, fees.date, &fees.total_amount, &fees.paid_amount, fees.status) != EOF)
+    {
+        if (fees.student_id == id)
+        {
+            system("cls");
+            found = 1;
+            printf("\n\n Student Fees Record found..\n\n");
+            printf("|----------------------------------------------------------------------------------------------------------------------------------------|\n");
+            printf("| %-10s | %-30s | %-30s | %-15s | %-10s | %-10s |  %s  |\n", "Student_ID", "Student_Name", "Class_Name", "Date", "Total_amount", "Paid_amount", "Status");
+            printf("|________________________________________________________________________________________________________________________________________|\n");
+            printf("| %-10d | %-30s | %-30s | %-15s |     %d     |    %d     | %-9s|\n", fees.student_id, fees.student_name, fees.class_name, fees.date, fees.total_amount, fees.paid_amount, fees.status);
+            printf("|----------------------------------------------------------------------------------------------------------------------------------------|\n");
+            int res = fees.paid_amount;
+            printf("\n\n Note --> You should to pay %d amount \n", fees.total_amount - fees.paid_amount);
+            printf("\n\n Enter amount to pay : ");
+            int pay;
+            scanf("%d", &pay);
+            fees.paid_amount = fees.paid_amount + pay;
+            if (fees.total_amount == fees.paid_amount)
+            {
+                strcpy(fees.status, "PAID");
+            }
+            else if (fees.total_amount >= fees.paid_amount)
+            {
+                strcpy(fees.status, "PENDING");
+            }
+        }
+
+        fprintf(temp, "%-10d %-30s %-30s %-15s %-10d %-10d %s\n", fees.student_id, fees.student_name, fees.class_name, fees.date, fees.total_amount, fees.paid_amount, fees.status);
+    }
+
+    fclose(temp);
+    fclose(fptr);
+
+    if (!found)
+    {
+        printf("\n\n Student record not found..");
+        remove("fees.txt");
+        rename("temp.txt", "fees.txt");
+        return;
+    }
+    else
+    {
+        printf("\n\n Student record updated successfully!!");
+        remove("fees.txt");
+        rename("temp.txt", "fees.txt");
+        return;
+    }
 }
 
 // strcmp(fees.class_name, parameter) == 0 || strcmp(fees.status, parameter) == 0

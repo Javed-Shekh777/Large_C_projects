@@ -77,5 +77,6 @@ void viewAttendence(char []);
 // Fees functions (attendence.c)
 void makeFees();
 void viewFees(int);
+void editFees(int);
 
 #endif
